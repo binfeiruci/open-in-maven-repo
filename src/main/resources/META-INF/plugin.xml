@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.github.binfeiruci.openinmavenrepo</id>
-    <name>open-in-maven-repo</name>
+    <name>Open In Maven Repo</name>
     <vendor>binfeiruci</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -9,10 +9,25 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.binfeiruci.openinmavenrepo.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+<!--        <toolWindow factoryClass="com.github.binfeiruci.openinmavenrepo.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>-->
+        <applicationService serviceImplementation="com.github.binfeiruci.openinmavenrepo.settings.OpenInMavenRepoSettings"/>
+        <applicationConfigurable parentId="tools"
+                                 instance="com.github.binfeiruci.openinmavenrepo.settings.OpenInMavenRepoSettingsConfigurable"
+                                 id="com.github.binfeiruci.openinmavenrepo.settings.OpenInMavenRepoSettingsConfigurable"
+                                 displayName="Open in Maven Repository"/>
+        <notificationGroup id="open-in-maven-repo"
+                           displayType="BALLOON"
+                           toolWindowId="Event Log"
+                           isLogByDefault="true"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.binfeiruci.openinmavenrepo.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+<!--        <listener class="com.github.binfeiruci.openinmavenrepo.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>-->
     </applicationListeners>
+
+    <actions>
+        <action id="OpenInMavenRepoAction" class="com.github.binfeiruci.openinmavenrepo.actions.OpenInMavenRepoAction" text="Open In Maven Repository">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
