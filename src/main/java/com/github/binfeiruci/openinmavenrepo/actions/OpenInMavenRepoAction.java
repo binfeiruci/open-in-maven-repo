@@ -62,11 +62,12 @@ public class OpenInMavenRepoAction extends AnAction {
 
         if ("artifactId".equals(tag.getName()) || "groupId".equals(tag.getName()) || "version".equals(tag.getName())) {
             String groupId;
-            XmlTag mavenParent = tag.getParentTag().findFirstSubTag("parent");
-            if (mavenParent != null) {
-                groupId = mavenParent.findFirstSubTag("groupId").getValue().getText();
+            XmlTag groupTag = tag.getParentTag().findFirstSubTag("groupId");
+            if (null != groupTag) {
+                groupId = groupTag.getValue().getText();
             } else {
-                groupId = tag.getParentTag().findFirstSubTag("groupId").getValue().getText();
+                XmlTag mavenParent = tag.getParentTag().findFirstSubTag("parent");
+                groupId = mavenParent.findFirstSubTag("groupId").getValue().getText();
             }
 
             String artifactId = tag.getParentTag().findFirstSubTag("artifactId").getValue().getText();
